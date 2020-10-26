@@ -34,11 +34,10 @@ const Header = () => {
         <Wrapper>
             <>
             <Logo src="https://icon-library.net//images/car-icon/car-icon-0.jpg"/>
-                <h1>Car API</h1>
+                <h1>Text</h1>
             </>
             <Menu>
                 <ItemList><Link to={'/'}><MenuButton>Home</MenuButton></Link></ItemList>
-                <ItemList><Link to={'/add'}><MenuButton>Add</MenuButton></Link></ItemList>
             </Menu>
         </Wrapper>
     )
