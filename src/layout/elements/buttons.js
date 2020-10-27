@@ -2,10 +2,11 @@ import styled from 'styled-components'
 
 
 export const BasicButton = styled.button`
-border: none;
 border: 1px solid rgb(224 223 223);
 border-radius: 5px;
 margin: 5px;
+font-size: 15px;
+
 background: #F8FAFC;
 &:hover  {
 background: #A9ABAD;
