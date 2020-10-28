@@ -29,32 +29,51 @@ const WinInfo = styled(InfoBox)`
 border: 5px solid #186518;
 `
 
+const BoldText = styled.span`
+font-weight: 700;
+`
+
 const Home = () => {
 
-    const [userValue, setUserValue] = useState(0)
-    const [currency, setCurrency] = useState(10)
-    const [counter, setCounter] = useState(0)
-    const [box, setBox] = useState(
-        <InfoBox>
-            Wprowadź aktualny kurs ___ uwzględniając 2 miejsca po przecinku
-        </InfoBox>
-    );
+    const [data, setData] = useState({})
+    const [isLoading, setIsLoading] = useState(true)
     const [end, setEnd] = useState(false)
+    const [userValue, setUserValue] = useState()
+    const [counter, setCounter] = useState(0)
+    const [box, setBox] = useState("");
+
+    const getDataFromAPI = () => {
+        axios.get(`http://localhost:8080/exchange-rate/PLN`)
+            .then(res => {
+                setData(res.data)
+                console.log(res.data)
+                setIsLoading(false)
+            })
+    }
 
     useEffect(() => {
+        getDataFromAPI()
+    }, [])
 
-    }, [counter])
+
+    useEffect(() => {
+        setBox(
+            <InfoBox>
+                Wprowadź aktualny kurs <BoldText>{data.fullName}</BoldText> uwzględniając 2 miejsca po przecinku
+            </InfoBox>
+        )
+    }, [isLoading])
 
     const checkAnswer = () => {
         let c = counter + 1
         setCounter(c)
-        if (userValue > currency) {
+        if (userValue > data.rates.value) {
             setBox(
                 <WarningInfo>
                     Za dużo
                 </WarningInfo>
             )
-        } else if (userValue < currency) {
+        } else if (userValue < data.rates.value) {
             setBox(
                 <WarningInfo>
                     Za mało
@@ -71,29 +90,35 @@ const Home = () => {
     }
 
     const restart = () => {
-        setUserValue(0)
-        setCurrency(10)
-        setCounter(0)
-        setBox(
-            <InfoBox>
-                Wprowadź aktualny kurs ___ uwzględniając 2 miejsca po przecinku
-            </InfoBox>
-        )
+        getDataFromAPI()
+        setIsLoading(true)
         setEnd(false)
+        setUserValue()
+        setCounter(0)
     }
 
 
     return (
         <Layout>
-            {box}
-            <ControlBox>
-                <BasicInput value={userValue} onChange={(event) => setUserValue(parseFloat(event.target.value))}
-                            type="number" />
-                <div>
-                    <MenuButton onClick={checkAnswer} disabled={end}>Sprawdź!</MenuButton>
-                    <MenuButton onClick={restart} disabled={!end}>Restart</MenuButton>
-                </div>
-            </ControlBox>
+            {!isLoading ? (
+                <>
+                    {box}
+                    <ControlBox>
+                        <BasicInput value={userValue || ''}
+                                    onChange={(event) => setUserValue(
+                                        event.target.value !== null ?
+                                            parseFloat(event.target.value) : ""
+                                    )}
+                                    type="number"/>
+                        <div>
+                            <MenuButton onClick={checkAnswer} disabled={end}>Sprawdź!</MenuButton>
+                            <MenuButton onClick={restart} disabled={!end}>Restart</MenuButton>
+                        </div>
+                    </ControlBox>
+                </>
+            ) : (
+                <BoldText>Loading...</BoldText>
+            )}
         </Layout>
     )
 }
