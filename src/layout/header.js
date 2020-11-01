@@ -4,18 +4,17 @@ import {MenuButton} from "./elements/buttons";
 import {
     Link
 } from "react-router-dom";
-
+import logo from "../logo.png"
 
 const Wrapper = styled.div`
 height: 50px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-border-bottom: 1px solid rgb(224 223 223);
 `
 
 const Logo = styled.img`
-width: 150px;
+height: 100px;
 `
 const Menu = styled.ul`
 list-style: none;
@@ -33,8 +32,8 @@ const Header = () => {
     return (
         <Wrapper>
             <>
-            <Logo src="https://icon-library.net//images/car-icon/car-icon-0.jpg"/>
-                <h1>Text</h1>
+            <Logo src={logo}/>
+                <h1>Latest news</h1>
             </>
             <Menu>
                 <ItemList><Link to={'/'}><MenuButton>Home</MenuButton></Link></ItemList>
