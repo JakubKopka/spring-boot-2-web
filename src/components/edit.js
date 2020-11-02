@@ -3,10 +3,11 @@ import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import Layout from "../layout/layout";
 import axios from "axios";
-import {BasicInput} from "../layout/elements/inputs";
-import {EditButton} from "../layout/elements/buttons";
+import {BasicInput, TextBox} from "../layout/elements/inputs";
+import {MenuButton} from "../layout/elements/buttons";
 
 const Box = styled.form`
+width: 100%;
 display: flex;
 flex-direction: column;
 justify-content: center;
@@ -20,13 +21,11 @@ margin: 10px;
 const InfoLabel = styled.label`
 `
 
-const TextBox = styled.textarea`
-border: none;
-min-width: 800px;
-margin: 20px 50px 20px 20px;
-background: inherit;
-border: 1px solid black;
+const ImgPreview = styled.img`
+border-radius: 10px;
+height: 20vh;
 `
+
 
 const Edit = ({match}) => {
 
@@ -87,7 +86,7 @@ const Edit = ({match}) => {
                     <TextBox onChange={(event) => {
                         setDescription(event.target.value)
                     }}
-                             value={description} placeholder="Title" required/>
+                             value={description} placeholder="Description" required/>
                 </Row>
 
                 <Row>
@@ -95,7 +94,7 @@ const Edit = ({match}) => {
                     <BasicInput onChange={(event) => {
                         setUrl(event.target.value)
                     }}
-                                value={url} placeholder="Title" required/>
+                                value={url} placeholder="Url" required/>
                 </Row>
 
                 <Row>
@@ -103,7 +102,7 @@ const Edit = ({match}) => {
                     <BasicInput onChange={(event) => {
                         setAuthor(event.target.value)
                     }}
-                                value={author} placeholder="Title" required/>
+                                value={author} placeholder="Author" required/>
                 </Row>
 
                 <Row>
@@ -111,7 +110,11 @@ const Edit = ({match}) => {
                     <BasicInput onChange={(event) => {
                         setImage(event.target.value)
                     }}
-                                value={image} placeholder="Title" required/>
+                                value={image} placeholder="Image url" required/>
+                </Row>
+
+                <Row>
+                    <ImgPreview src={image}/>
                 </Row>
 
                 <Row>
@@ -119,10 +122,10 @@ const Edit = ({match}) => {
                     <BasicInput onChange={(event) => {
                         setPublished(event.target.value)
                     }}
-                                value={published} placeholder="Title" required/>
+                                value={published} placeholder="Published" required/>
                 </Row>
 
-                <EditButton onClick={saveItem}>Save</EditButton>
+                <MenuButton onClick={saveItem}>Save</MenuButton>
             </Box>
         </Layout>
     )
