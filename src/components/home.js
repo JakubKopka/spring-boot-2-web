@@ -21,7 +21,7 @@ const Home = () => {
         <Layout>
             {!isLoading ? (
             data.map(element => (
-                <News image={element.image} title={element.title} description={element.description}
+                <News id= {element.id} image={element.image} title={element.title} description={element.description}
                       url={element.url} published={element.published} author={element.author}/>
                 ))):(
                     <h3>Loading...</h3>

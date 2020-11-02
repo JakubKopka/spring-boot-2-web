@@ -55,7 +55,7 @@ const News = (props) => {
                 <Description>{props.description}</Description>
                 <Panel>
                     <a href={props.url}><MenuButton>View</MenuButton></a>
-                    <EditButton>Edit</EditButton>
+                    <a href={`/${props.id}`}><EditButton>Edit</EditButton></a>
                 </Panel>
             </Content>
         </Wrapper>
