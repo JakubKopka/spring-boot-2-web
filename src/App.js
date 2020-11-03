@@ -5,13 +5,18 @@ import {
     Route,
 } from "react-router-dom";
 import Home from "./components/home";
+import Add from "./components/add";
+import Edit from "./components/edit";
 
 
 export default function App() {
     return (
         <Router>
             <Switch>
-                {/*<Route path={`/:id`} component={Item}/>*/}
+                <Route path={`/edit/:id`} component={Edit}/>
+                <Route path={`/delete/:id`} component={Edit}/>
+                <Route path={`/add`} component={Add}/>
+
                 <Route path="/">
                     <Home/>
                 </Route>

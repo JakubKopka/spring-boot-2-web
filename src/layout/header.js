@@ -11,11 +11,11 @@ height: 50px;
 display: flex;
 justify-content: space-between;
 align-items: center;
-border-bottom: 1px solid rgb(224 223 223);
+//border-bottom: 1px solid rgb(224 223 223);
 `
 
 const Logo = styled.img`
-width: 150px;
+width: 80px;
 `
 const Menu = styled.ul`
 list-style: none;
@@ -33,11 +33,12 @@ const Header = () => {
     return (
         <Wrapper>
             <>
-            <Logo src="https://icon-library.net//images/car-icon/car-icon-0.jpg"/>
-                <h1>Text</h1>
+            <Logo src="https://www.flaticon.com/svg/static/icons/svg/259/259500.svg"/>
+                <h1>myNote.</h1>
             </>
             <Menu>
-                <ItemList><Link to={'/'}><MenuButton>Home</MenuButton></Link></ItemList>
+                <ItemList><Link to={'/'}><MenuButton>home</MenuButton></Link></ItemList>
+                <ItemList><Link to={'/add'}><MenuButton>add note</MenuButton></Link></ItemList>
             </Menu>
         </Wrapper>
     )
