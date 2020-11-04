@@ -1,8 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import styled from 'styled-components'
-import {BasicButton, MenuButton} from "../layout/elements/buttons";
+import { MenuButton} from "../layout/elements/buttons";
 import Layout from "../layout/layout";
 import {ContentArea, Input} from "../layout/elements/inputs";
+import axios from "axios";
+import { useHistory } from "react-router"
 
 const Wrapper = styled.div`
 display: flex;
@@ -42,9 +44,20 @@ max-height: 20px;
 `
 
 const Add = () => {
-
+    let history = useHistory()
     const [title, setTitle] = useState("")
     const [content, setContent] = useState("")
+
+    const addNewNote = () =>{
+        const url = `http://localhost:8080/note/`
+        axios.post(url, {
+            "title": title,
+            "content": content
+        })
+            .then(res => {
+                history.push("/")
+            })
+    }
 
     return (
         <Layout>
@@ -55,12 +68,12 @@ const Add = () => {
                                placeholder="Write title here"/>
                     </Top>
                     <Content>
-                        <ContentArea value={title} onChange={(event) => setTitle(event.target.value)}
+                        <ContentArea value={content} onChange={(event) => setContent(event.target.value)}
                                      placeholder="Write some notes here..."/>
 
                     </Content>
                     <Bottom>
-                        <MenuButton>
+                        <MenuButton onClick={addNewNote}>
                             add note
                         </MenuButton>
                     </Bottom>

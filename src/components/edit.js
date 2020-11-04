@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import styled from 'styled-components'
-import {BasicButton, MenuButton} from "../layout/elements/buttons";
+import {MenuButton} from "../layout/elements/buttons";
 import Layout from "../layout/layout";
 import {ContentArea, Input} from "../layout/elements/inputs";
+import axios from "axios";
+import { useHistory } from "react-router"
 
 const Wrapper = styled.div`
 display: flex;
@@ -43,13 +45,38 @@ max-height: 20px;
 
 const Edit = ({match}) => {
 
+    let history = useHistory()
     const id = match.params.id;
-    const [title, setTitle] = useState(`Title ${id}`)
-    const [content, setContent] = useState("Content")
+    const [title, setTitle] = useState("")
+    const [content, setContent] = useState("")
+    const [loaded, setLoaded] = useState(false)
+
+    useEffect(() => {
+        const url = `http://localhost:8080/note/${id}`
+        axios.get(url)
+            .then(res => {
+                setTitle(res.data.title)
+                setContent(res.data.content)
+                setLoaded(true)
+            })
+    }, [])
+
+
+    const updateNote = () =>{
+        const url = `http://localhost:8080/note/${id}`
+        axios.put(url, {
+            "title": title,
+            "content": content
+        })
+            .then(res => {
+                history.push("/")
+            })
+    }
 
     return (
         <Layout>
             <Wrapper>
+                {loaded ? (
                 <NoteBox>
                     <Top>
                         <Input value={title} onChange={(event)=> setTitle(event.target.value)} placeholder="Write title here"/>
@@ -58,11 +85,13 @@ const Edit = ({match}) => {
                         <ContentArea value={content} onChange={(event)=> setContent(event.target.value)} placeholder="Write some notes here..."/>
                         </Content>
                     <Bottom>
-                        <MenuButton>
+                        <MenuButton onClick={updateNote}>
                             save note
                         </MenuButton>
                     </Bottom>
-                </NoteBox>
+                </NoteBox>):(
+                        <h2>Loading...</h2>
+                    )}
             </Wrapper>
         </Layout>
     )

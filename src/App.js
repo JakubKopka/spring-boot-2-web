@@ -13,11 +13,10 @@ export default function App() {
     return (
         <Router>
             <Switch>
-                <Route path={`/edit/:id`} component={Edit}/>
-                <Route path={`/delete/:id`} component={Edit}/>
-                <Route path={`/add`} component={Add}/>
-
-                <Route path="/">
+                <Route exact path={`/edit/:id`} component={Edit}/>
+                <Route exact path={`/delete/:id`} component={Edit}/>
+                <Route exact path={`/add`} component={Add}/>
+                <Route exact path="/">
                     <Home/>
                 </Route>
             </Switch>
